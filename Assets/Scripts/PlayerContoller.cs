@@ -12,9 +12,26 @@ public class PlayerContoller : MonoBehaviour {
 	public float speed;
 	public float tilt;
 	public Boundary boundary;
+	public AudioSource audioSource;
+
+	public GameObject shot;
+	public Transform shotSpawn;
+
+	private float nextFrie = 0f;
+
+	public float fireRate = 0.5f;
+
+	void Update(){
+		if (Input.GetKey(KeyCode.Space) && Time.time > nextFrie) {
+			nextFrie = Time.time + fireRate;
+			Instantiate (shot, shotSpawn.position, shotSpawn.rotation);
+			audioSource.Play ();
+		}
+	}
 
 	void Start(){
 		rb = GetComponent<Rigidbody> ();
+		audioSource = GetComponent<AudioSource> ();
 	}
 
 	void FixedUpdate(){
